@@ -1,0 +1,17 @@
+node_modules
+.env
+.git
+*.wav
+*.mid
+*.zip
+downloads/
+uploads/
+karaoke-sessions/
+creations-storage/
+melody-cache/
+catalogue-audio/
+data/
+ab_test/
+fluidsynth-bin/
+server.log
+liens-*.txt

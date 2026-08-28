@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>App Reprises</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div id="authScreen" class="screen">
+  <div class="auth-card">
+    <h1>App Reprises</h1>
+    <p class="muted">Interface de test du backend — pas le client mobile final.</p>
+    <div class="tabs">
+      <button class="tab active" data-tab="login">Connexion</button>
+      <button class="tab" data-tab="register">Inscription</button>
+    </div>
+    <form id="loginForm" class="tab-panel active">
+      <input type="email" id="loginEmail" placeholder="email" required>
+      <input type="password" id="loginPassword" placeholder="mot de passe" required>
+      <button type="submit" class="btn-primary">Se connecter</button>
+      <p class="error" id="loginError"></p>
+    </form>
+    <form id="registerForm" class="tab-panel">
+      <input type="email" id="registerEmail" placeholder="email" required>
+      <input type="password" id="registerPassword" placeholder="mot de passe (8+ caractères)" required>
+      <input type="text" id="registerReferral" placeholder="code de parrainage (optionnel)">
+      <button type="submit" class="btn-primary">Créer un compte</button>
+      <p class="error" id="registerError"></p>
+    </form>
+  </div>
+</div>
+
+<div id="app" class="screen hidden">
+  <nav id="nav">
+    <div class="nav-title">App Reprises</div>
+    <button data-view="catalogue" class="nav-btn active">Catalogue</button>
+    <button data-view="generate" class="nav-btn">Génération IA</button>
+    <button data-view="karaoke" class="nav-btn">Karaoké</button>
+    <button data-view="creations" class="nav-btn">Mes reprises</button>
+    <button data-view="leaderboard" class="nav-btn">Classement</button>
+    <button data-view="referral" class="nav-btn">Parrainage</button>
+    <button data-view="settings" class="nav-btn">Paramètres</button>
+    <button data-view="admin" class="nav-btn admin-only hidden">Modération</button>
+    <div class="nav-spacer"></div>
+    <div id="userBadge" class="user-badge"></div>
+    <button id="logoutBtn" class="nav-btn">Déconnexion</button>
+  </nav>
+
+  <main id="main">
+
+    <section id="view-catalogue" class="view active">
+      <h2>Catalogue</h2>
+      <input type="search" id="catalogueSearch" placeholder="Rechercher un titre ou un artiste...">
+      <div id="catalogueList" class="card-list"></div>
+
+      <h3>Soumettre un morceau (écran 15)</h3>
+      <form id="submitTrackForm" class="form-grid">
+        <input type="text" id="submitTitle" placeholder="Titre" required>
+        <input type="text" id="submitArtist" placeholder="Artiste" required>
+        <input type="text" id="submitGenre" placeholder="Genre">
+        <input type="file" id="submitFile" accept="audio/*" required>
+        <label class="checkbox-line"><input type="checkbox" id="submitRights" required> Je cède les droits d'usage selon les conditions artiste</label>
+        <button type="submit" class="btn-primary">Soumettre</button>
+      </form>
+      <p id="submitStatus" class="status"></p>
+    </section>
+
+    <section id="view-generate" class="view">
+      <h2>Génération IA (écran 8)</h2>
+      <select id="generateTrackSelect"></select>
+      <textarea id="generatePrompt" placeholder="Décris le style voulu (genre, instruments, ambiance)...">Bikutsi camerounais modernise, basse electrique groovy, percussions traditionnelles rapides, guitare electrique rythmique</textarea>
+      <div class="row">
+        <label>Durée (s, laisser vide = durée source) <input type="number" id="generateDuration" min="1" max="180"></label>
+      </div>
+      <button id="generateBtn" class="btn-primary">Générer</button>
+      <p id="generateStatus" class="status"></p>
+      <audio id="generateAudio" controls class="hidden"></audio>
+    </section>
+
+    <section id="view-karaoke" class="view">
+      <h2>Karaoké</h2>
+      <div id="karaokeStep1">
+        <select id="karaokeTrackSelect"></select>
+        <button id="karaokeCreateBtn" class="btn-primary">Créer une session (écran 6)</button>
+      </div>
+      <div id="karaokeSession" class="hidden">
+        <h3>Écran 7 — Piste d'accompagnement</h3>
+        <audio id="backingAudio" controls></audio>
+
+        <h3>Enregistrement</h3>
+        <button id="recordBtn" class="btn-primary">🎤 Enregistrer</button>
+        <button id="stopRecordBtn" class="hidden">⏹ Arrêter</button>
+        <span id="recordStatus" class="status"></span>
+        <audio id="vocalPreview" controls class="hidden"></audio>
+        <button id="uploadVocalBtn" class="hidden btn-secondary">Envoyer la prise</button>
+
+        <div id="autotuneSection" class="hidden">
+          <h3>Écran 9 — Comparaison autotune</h3>
+          <label>Intensité de correction : <span id="strengthValue">1.0</span>
+            <input type="range" id="autotuneStrength" min="0" max="1" step="0.1" value="1.0">
+          </label>
+          <button id="applyAutotuneBtn" class="btn-primary">Appliquer l'autotune</button>
+          <div id="compareBox" class="hidden">
+            <div><p>Avant</p><audio id="vocalRawAudio" controls></audio></div>
+            <div><p>Après</p><audio id="vocalTunedAudio" controls></audio></div>
+          </div>
+        </div>
+
+        <div id="mixSection" class="hidden">
+          <h3>Écran 10 — Assemblage final</h3>
+          <button id="mixBtn" class="btn-primary">Mixer</button>
+          <audio id="finalMixAudio" controls class="hidden"></audio>
+        </div>
+      </div>
+    </section>
+
+    <section id="view-creations" class="view">
+      <h2>Mes reprises (écrans 11-13)</h2>
+      <div id="creationsList" class="card-list"></div>
+    </section>
+
+    <section id="view-leaderboard" class="view">
+      <h2>Classement (écran 19)</h2>
+      <p class="muted">Critère : nombre de reprises créées.</p>
+      <table id="leaderboardTable"><thead><tr><th>#</th><th>Utilisateur</th><th>Reprises</th></tr></thead><tbody></tbody></table>
+    </section>
+
+    <section id="view-referral" class="view">
+      <h2>Parrainage (écran 18)</h2>
+      <p>Ton code : <strong id="myReferralCode"></strong> <button id="copyReferralBtn" class="btn-secondary">Copier</button></p>
+      <h3>Filleuls</h3>
+      <div id="referralsList" class="card-list"></div>
+    </section>
+
+    <section id="view-settings" class="view">
+      <h2>Paramètres (écran 17)</h2>
+      <form id="settingsForm" class="form-grid">
+        <label>Pseudo affiché <input type="text" id="displayNameInput"></label>
+        <label>Langue
+          <select id="languageInput"><option value="fr">Français</option><option value="en">English</option></select>
+        </label>
+        <label class="checkbox-line"><input type="checkbox" id="notificationsInput"> Notifications</label>
+        <button type="submit" class="btn-primary">Enregistrer</button>
+      </form>
+      <p id="settingsStatus" class="status"></p>
+    </section>
+
+    <section id="view-admin" class="view">
+      <h2>Modération (admin)</h2>
+      <div id="pendingList" class="card-list"></div>
+    </section>
+
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>

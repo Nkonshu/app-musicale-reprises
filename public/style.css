@@ -1,0 +1,100 @@
+:root {
+  --bg: #0E120F;
+  --bg-deep: #090B08;
+  --surface: #181C18;
+  --surface-raised: #212620;
+  --green: #1F9E5C;
+  --green-bright: #35C97C;
+  --gold: #F0C13B;
+  --red: #D8283F;
+  --paper: #F6F5F0;
+  --mute: #9AA39A;
+}
+
+* { box-sizing: border-box; }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg-deep) 100%);
+  color: var(--paper);
+  min-height: 100vh;
+}
+
+.hidden { display: none !important; }
+
+.screen { min-height: 100vh; }
+
+/* --- Auth --- */
+#authScreen { display: flex; align-items: center; justify-content: center; }
+.auth-card {
+  background: var(--surface); border-radius: 16px; padding: 32px; width: 340px;
+  border: 1px solid rgba(255,255,255,0.08);
+}
+.auth-card h1 { color: var(--gold); margin: 0 0 4px; font-size: 22px; }
+.muted { color: var(--mute); font-size: 13px; }
+.tabs { display: flex; gap: 8px; margin: 16px 0; }
+.tab {
+  flex: 1; padding: 8px; background: var(--surface-raised); border: none; color: var(--mute);
+  border-radius: 8px; cursor: pointer;
+}
+.tab.active { background: var(--green); color: #04180d; font-weight: 700; }
+.tab-panel { display: none; flex-direction: column; gap: 10px; }
+.tab-panel.active { display: flex; }
+
+input, select, textarea, button {
+  font-family: inherit; font-size: 14px; padding: 10px 12px; border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.12); background: var(--surface-raised); color: var(--paper);
+}
+textarea { min-height: 70px; resize: vertical; }
+input[type=checkbox] { width: auto; padding: 0; }
+.checkbox-line { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--mute); }
+
+.btn-primary {
+  background: var(--green-bright); color: #04180d; font-weight: 800; border: none; cursor: pointer;
+}
+.btn-secondary {
+  background: transparent; border: 1px solid var(--green-bright); color: var(--green-bright); cursor: pointer;
+}
+.error { color: var(--red); font-size: 13px; min-height: 16px; }
+.status { color: var(--gold); font-size: 13px; min-height: 16px; }
+
+/* --- App shell --- */
+#app { display: flex; }
+#nav {
+  width: 200px; background: var(--surface); padding: 16px 10px; display: flex; flex-direction: column; gap: 4px;
+  position: sticky; top: 0; height: 100vh;
+}
+.nav-title { color: var(--gold); font-weight: 800; padding: 8px 10px 16px; }
+.nav-btn {
+  background: none; border: none; color: var(--mute); text-align: left; padding: 10px; border-radius: 8px; cursor: pointer;
+}
+.nav-btn:hover { background: var(--surface-raised); color: var(--paper); }
+.nav-btn.active { background: var(--surface-raised); color: var(--green-bright); font-weight: 700; }
+.nav-spacer { flex: 1; }
+.user-badge { font-size: 12px; color: var(--mute); padding: 0 10px 8px; }
+
+#main { flex: 1; padding: 28px 36px; max-width: 900px; }
+.view { display: none; }
+.view.active { display: block; }
+h2 { color: var(--paper); }
+h3 { color: var(--gold); font-size: 15px; margin-top: 28px; }
+
+.card-list { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+.card {
+  background: var(--surface); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 14px 16px;
+  display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap;
+}
+.card-title { font-weight: 700; }
+.card-sub { color: var(--mute); font-size: 12px; }
+.badge { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--surface-raised); color: var(--gold); }
+
+.form-grid { display: flex; flex-direction: column; gap: 10px; max-width: 420px; margin-top: 10px; }
+.row { margin: 10px 0; }
+select, #catalogueSearch, #generatePrompt { width: 100%; max-width: 500px; }
+
+table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+th { color: var(--mute); font-size: 12px; text-transform: uppercase; }
+
+audio { display: block; margin: 10px 0; width: 100%; max-width: 420px; }
+#compareBox { display: flex; gap: 24px; margin-top: 12px; }
