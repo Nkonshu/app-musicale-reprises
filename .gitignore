@@ -12,6 +12,7 @@ melody-cache/
 *.mid
 *.mp3
 downloads/
+releases/
 ab_test/
 fluidsynth-bin/
 server.log

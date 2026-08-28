@@ -26,6 +26,10 @@ const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '..', 'public')));
 
+const RELEASES_DIR = path.join(__dirname, '..', 'releases');
+fs.mkdirSync(RELEASES_DIR, { recursive: true });
+app.use('/releases', express.static(RELEASES_DIR));
+
 const UPLOAD_DIR = path.join(__dirname, '..', 'uploads');
 fs.mkdirSync(UPLOAD_DIR, { recursive: true });
 const upload = multer({ dest: UPLOAD_DIR });

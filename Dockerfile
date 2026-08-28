@@ -21,7 +21,7 @@ COPY . .
 
 # Dossiers de donnees persistantes (montes en volume Coolify) - crees ici
 # au cas ou le volume est vide au premier demarrage.
-RUN mkdir -p data uploads karaoke-sessions creations-storage melody-cache catalogue-audio downloads
+RUN mkdir -p data uploads karaoke-sessions creations-storage melody-cache catalogue-audio downloads releases
 
 ENV PORT=3300
 EXPOSE 3300
